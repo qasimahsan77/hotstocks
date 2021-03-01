@@ -1,0 +1,64 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+<h2 class="text-info">Sign up / <a href="{% url 'login' %}">Log in</a></h2>
+  <form method="post" enctype="multipart/form-data" action={% url "signup" %} class="form-horizontal">
+    {% csrf_token %}
+      <div class="form-group">
+          <label for="id_username" class="col-md-2 control-label">Username:</label>
+          <div class="col-md-10">
+              <input type="text" name="username" placeholder="username" required class="form-control"/>
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="id_password1" class="col-md-2 control-label">Password:</label>
+          <div class="col-md-10">
+              <input type="password" name="password1" placeholder="password" required onchange="onChange()" class="form-control"/>
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="id_password2" class="col-md-2 control-label">Password:</label>
+          <div class="col-md-10">
+              <input type="password" name="password2" placeholder="confirm password" required onchange="onChange()" class="form-control"/>
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="id_firstname" class="col-md-2 control-label">Firstname</label>
+          <div class="col-md-10">
+              <input type="text" name="first_name" placeholder="Firstname" required class="form-control"/>
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="id_lastname" class="col-md-2 control-label">Lastname</label>
+          <div class="col-md-10">
+              <input type="text" name="last_name" placeholder="Lastname"  required class="form-control"/>
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="id_email" class="col-md-2 control-label">Email</label>
+          <div class="col-md-10">
+              <input type="email" name="email" placeholder="Email address" required class="form-control"/>
+          </div>
+      </div>
+    <button type="submit" class="btn btn-default col-md-offset-4 btn-lg">Sign up</button>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> {{formError.values}}.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+     <p class="text-danger">{{formError.values}}</p>
+</form>
+<script>
+    $(".alert").alert('close');
+    function onChange() {
+        const password = document.querySelector('input[name=password1]');
+        const confirm = document.querySelector('input[name=password2]');
+        if (confirm.value === password.value) {
+            confirm.setCustomValidity('');
+        } else {
+            confirm.setCustomValidity('Passwords do not match');
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+<style>
+    .row{
+        margin-top:5em;
+    }
+</style>
+<div class="row">
+    <div class="col-md-4 col-md-offset-2">
+        {%if DbResult|length > 0 %}
+        <table class="table table-striped table-bordered table-hover table-responsive">
+<thead class="thead-dark">
+    <tr>
+      <th scope="col">Symbol</th>
+      <th scope="col">Name</th>
+      <th scope="col">Last</th>
+      <th scope="col">Change</th>
+      <th scope="col">%Chg</th>
+      <th scope="col">5D%Chg</th>
+      <th scope="col">High</th>
+      <th scope="col">Low</th>
+      <th scope="col">Volume</th>
+      <th scope="col">Time</th>
+    </tr>
+  </thead>
+          <tbody>
+              {%for Symbol,Name,Last,stockchange,Chg,chgD,stockHigh,stockLow,VOLUME,stockTime in DbResult%}
+        <tr>
+            <td>{{Symbol|safe}}</td>
+            <td>{{Name|safe}}</td>
+            <td>{{Last|safe}}</td>
+            <td>{{stockchange|safe}}</td>
+            <td>{{Chg|safe}}</td>
+            <td>{{chgD|safe}}</td>
+            <td>{{stockHigh|safe}}</td>
+            <td>{{stockLow|safe}}</td>
+            <td>{{VOLUME|safe}}</td>
+            <td>{{stockTime|safe}}</td>
+        </tr>
+        {%endfor%}    
+  </tbody>
+            </table>
+        {%endif%}
+        </div>
+</div>
+{% endblock %}
