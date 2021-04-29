@@ -4,8 +4,8 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <Name>StockDisplyer</Name>
     <RootNamespace>StockDisplyer</RootNamespace>
-    <InterpreterId>{420a42e9-3811-40dc-9727-08944ce222d4}</InterpreterId>
-    <InterpreterVersion>2.7</InterpreterVersion>
+    <InterpreterId>{41f05aec-0e15-444b-bb73-a5f1be4aa544}</InterpreterId>
+    <InterpreterVersion>3.5</InterpreterVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -81,7 +81,7 @@
     <Content Include="app\static\app\scripts\respond.min.js" />
     <Content Include="app\static\app\scripts\_references.js" />
     <Content Include="app\templates\app\about.html" />
-    <Content Include="app\templates\app\contact.html" />
+    <Content Include="app\templates\app\news.html" />
     <Content Include="app\templates\app\index.html" />
     <Content Include="app\templates\app\layout.html" />
     <Content Include="app\templates\app\login.html" />
@@ -93,7 +93,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <InterpreterReference Include="{420a42e9-3811-40dc-9727-08944ce222d4}\2.7" />
+    <InterpreterReference Include="{41f05aec-0e15-444b-bb73-a5f1be4aa544}\3.5" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Django.targets" />
   <!-- Specify pre- and post-build commands in the BeforeBuild and 

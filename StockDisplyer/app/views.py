@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
+from newscatcher import Newscatcher
 from datetime import datetime
 import pymysql
 import sshtunnel
@@ -44,7 +45,7 @@ def signup(request):
                 return  render(request, 'app/signup.html', {'formError': form.error_messages,'title':'Signup'})
             pass
         else:
-            return  render(request, 'app/signup.html', {'formError': form.error_messages})
+            return  render(request, 'app/signup.html', {'formError': form.error_messages,'title':'Signup'})
         pass
     else:
         return  render(request, 'app/signup.html',{'title':'Signup'})
@@ -72,13 +73,13 @@ def login_user(request):
                     login(request, user)
                     return redirect('home')
                 else:
-                    return render(request, 'app/login_user.html')
+                    return render(request, 'app/login_user.html',{'title':'login'})
         except Exception as E:
             print(E)
-            return render(request, 'app/login_user.html')
+            return render(request, 'app/login_user.html',{'title':'login'})
         pass
     else:
-        return render(request, 'app/login_user.html')
+        return render(request, 'app/login_user.html',{'title':'login'})
     pass
 
 @login_required(login_url='login')
@@ -96,18 +97,50 @@ def home(request):
         assert isinstance(request, HttpRequest)
         return render(request,
             'app/index.html',
-            {'title':'Home Page','year':datetime.now().year,'DbResult':Result,
+            {'title':'Home','year':datetime.now().year,'DbResult':Result,
              })
 
-def contact(request):
-    """Renders the contact page."""
-    assert isinstance(request, HttpRequest)
+def news(request):
+    newstitle = []
+    newslink = []
+    publishdate = []
+    imagelink = []
+    websitelist = ['https://finance.yahoo.com/', 'https://edition.cnn.com/']
+    topiclist = ['finance', 'news']
+    webtopic = 0
+    while webtopic < len(websitelist):
+        fy = Newscatcher(website=websitelist[webtopic], topic=topiclist[webtopic])
+        results = fy.get_news()
+        articles = results['articles']
+        for Items in articles:
+            try:
+                newstitle.append(Items.get('title'))
+            except:
+                newstitle.append('n/a')
+            pass
+            try:
+                newslink.append(Items.get('link'))
+            except:
+                newslink.append('n/a')
+            pass
+            try:
+                publishdate.append(Items.get('published'))
+            except:
+                publishdate.append('n/a')
+            pass
+            try:
+                imagelink.append(Items.get('media_content').__getitem__(0).get('url'))
+            except:
+                imagelink.append('n/a')
+            pass
+        pass
+        webtopic += 1
+    pass
     return render(request,
-        'app/contact.html',
+        'app/news.html',
         {
-            'title':'Contact',
-            'message':'Your contact page.',
-            'year':datetime.now().year,
+            'title':'News',
+            'newsResult':list(zip(newstitle,newslink,publishdate,imagelink))
         })
 
 def about(request):

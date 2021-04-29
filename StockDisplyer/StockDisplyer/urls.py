@@ -10,7 +10,7 @@ from django.contrib import admin
 from django.contrib import admindocs
 import app.forms
 import app.views
-
+from app.views import login_user,home,signup,about,news
 # Uncomment the next lines to enable the admin:
 # from django.conf.urls import include
 # from django.contrib import admin
@@ -19,7 +19,7 @@ import app.views
 urlpatterns = [
     # Examples:
     url(r'^$', app.views.home, name='home'),
-    url(r'^contact$', app.views.contact, name='contact'),
+    url(r'^news$', app.views.news, name='news'),
     url(r'^about', app.views.about, name='about'),
     url(r'^signup$', app.views.signup, name='signup'),
     #url(r'^login/$', django.contrib.auth.views.login, name='login'),
@@ -29,8 +29,8 @@ urlpatterns = [
     url(r'^logout$',
         django.contrib.auth.views.LogoutView.as_view(template_name="app/login_user.html"),name='logout'),
     # Uncomment the admin/doc line below to enable admin documentation:
-    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    #url(r'^admin/doc/', 'django.contrib.admindocs.urls'),
 
     # Uncomment the next line to enable the admin:
-    url(r'^admin/', include(admin.site.urls)),
+    #url(r'^admin/', admin.site.urls)
 ]
